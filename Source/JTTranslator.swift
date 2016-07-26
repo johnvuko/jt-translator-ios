@@ -22,14 +22,14 @@ public class JTTranslator {
         return NSBundle.mainBundle().preferredLocalizations.first ?? "en"
     }
     
-    static func start(apiKey: String) {
+    public static func start(apiKey: String) {
         self.apiKey = apiKey
         
         loadTranslationsFromFile()
         update()
     }
     
-    static func update () {
+    public static func update () {
         print("[JTTranslator] Updating")
         
         // Params q avoid NSURLCache
@@ -76,7 +76,7 @@ public class JTTranslator {
         session.resume()
     }
     
-    static func tr (key: String) -> String? {
+    public static func tr (key: String) -> String? {
         if let localeTranslations = self.translations["translations"]?[self.currentUsableLocale] as? [String: AnyObject] {
             if let text = localeTranslations[key] as? String {
                 return text

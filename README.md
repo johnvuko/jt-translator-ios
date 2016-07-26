@@ -23,8 +23,15 @@ The `start` method will automatically load the last downloaded versions of your 
 In your AppDelegate, just add:
 
 ```swift
-func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-    JTTranslator.start("YOUR_API_KEY")
+import JTTranslator
+
+@UIApplicationMain
+class AppDelegate: UIResponder, UIApplicationDelegate {
+
+	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+	    JTTranslator.start("YOUR_API_KEY")
+	}
+	
 }
 ```
 
