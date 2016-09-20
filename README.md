@@ -4,7 +4,7 @@
 ![License](https://img.shields.io/cocoapods/l/JTTranslator.svg)
 ![Platform](https://img.shields.io/cocoapods/p/JTTranslator.svg)
 
-JTTranslator is an easy to way to manage your translations on iOS without building a new version of your app, which allow you to update your translations after having release on the AppStore.
+JTTranslator is an easy to way to manage your translations on iOS without building a new version of your app, which allow you to update your translations after having released on the AppStore.
 
 It's work with [Translator](https://translator.eivo.fr), a platform for manage your translations on iOS and Android.
 

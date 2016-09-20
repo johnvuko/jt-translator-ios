@@ -14,12 +14,13 @@ public class JTTranslator {
     
     private static var apiKey = ""
     
+    
     // en_US
-    private static var currentLocale = NSLocale.currentLocale().localeIdentifier
+    private static var currentLocale = NSLocale.current.identifier
     
     // en, app launch with this
     private static var currentUsableLocale : String {
-        return NSBundle.mainBundle().preferredLocalizations.first ?? "en"
+        return Bundle.main.preferredLocalizations.first ?? "en"
     }
     
     public static func start(apiKey: String) {
@@ -38,26 +39,26 @@ public class JTTranslator {
             return
         }
         
-        let request = NSMutableURLRequest(URL: url)
+        let request = NSMutableURLRequest(url: url as URL)
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.setValue("Token token=" + apiKey, forHTTPHeaderField: "Authorization")
         
-        let session = NSURLSession.sharedSession().dataTaskWithRequest(request) { (data, response, error) in
+        let session = URLSession.shared.dataTask(with: request as URLRequest) { (data, response, error) in
             if let error = error {
                 print("[JTTranslator] Failed to get new translations: \(error.localizedDescription)")
             }
             else if let data = data {
                 do {
-                    let object = try NSJSONSerialization.JSONObjectWithData(data, options: [])
+                    let object = try JSONSerialization.jsonObject(with: data, options: [])
                     if let translations = object as? [String : AnyObject] {
                         if  translations["status"] as? String == "ok" {
                             self.translations = translations
-                            self.saveTranslationsToFile(data)
+                            self.saveTranslationsToFile(result: data as NSData)
                             
                             print("[JTTranslator] Updated")
                         }
                         else {
-                            print("[JTTranslator] API error \(translations["display_message"] ?? "")")
+                            print("[JTTranslator] API error \((translations["display_message"] as? String) ?? "")")
                         }
                     }
                     else {
@@ -88,8 +89,8 @@ public class JTTranslator {
     
     private static var path: String? {
         get {
-            if let dir : NSString = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true).first {
-                return dir.stringByAppendingPathComponent("translations.json")
+            if let dir : NSString = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.allDomainsMask, true).first as NSString? {
+                return dir.appendingPathComponent("translations.json")
             }
             return nil
         }
@@ -99,7 +100,7 @@ public class JTTranslator {
         if let path = self.path {
             if let data = NSData(contentsOfFile: path) {
                 do {
-                    let object = try NSJSONSerialization.JSONObjectWithData(data, options: [])
+                    let object = try JSONSerialization.jsonObject(with: data as Data, options: [])
                     if let translations = object as? [String : AnyObject] {
                         self.translations = translations
                     }
@@ -117,7 +118,7 @@ public class JTTranslator {
     private static func saveTranslationsToFile (result: NSData) {
         if let path = self.path {
             do {
-                try result.writeToFile(path, options: NSDataWritingOptions(rawValue: 0))
+                try result.write(toFile: path, options: NSData.WritingOptions(rawValue: 0))
             }
             catch {
                 print("[JTTranslator] Failed to save translations")
