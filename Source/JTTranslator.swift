@@ -118,7 +118,7 @@ public class JTTranslator {
     private static func saveTranslationsToFile (result: NSData) {
         if let path = self.path {
             do {
-                try result.write(toFile: path, options: NSData.WritingOptions(rawValue: 0))
+                try result.write(toFile: path, options: .atomicWrite)
             }
             catch {
                 print("[JTTranslator] Failed to save translations")

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "JTTranslator"
-  s.version      = "1.1.0"
+  s.version      = "1.1.1"
   s.summary      = "Remotely manage your translations on iOS"
   s.homepage     = "https://github.com/jonathantribouharet/jt-translator-ios"
   s.license      = { :type => 'MIT' }

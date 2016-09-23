@@ -29,7 +29,7 @@ import JTTranslator
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-	    JTTranslator.start("YOUR_API_KEY")
+	    JTTranslator.start(apiKey: "YOUR_API_KEY")
 	}
 	
 }
@@ -41,8 +41,8 @@ The easiest way is to replace every call to `NSLocalizedString` by a global meth
 If you want to do like me, you have to create this global method:
 
 ```swift
-func tr (key: String) -> String {
-    return JTTranslator.tr(key) ?? NSLocalizedString(key, comment: "")
+func tr (_ key: String) -> String {
+    return JTTranslator.tr(key: key) ?? NSLocalizedString(key, comment: "")
 }
 ```
 
